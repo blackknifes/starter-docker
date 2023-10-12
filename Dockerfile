@@ -16,6 +16,8 @@ ENV TZ=Asia/Shanghai
 ENV MAX_BODY_SIZE=4m
 # 请求上下文路径
 ENV CONTEXT_PATH=/api/
+# 转发相对路径
+ENV PROXY_PATH=/
 # java启动文件
 ENV JAVA_FILE=admin.jar
 # java参数
