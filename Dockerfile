@@ -35,8 +35,10 @@ VOLUME /java
 VOLUME /vue
 
 # 添加dragonwell jre 11环境
-ADD dragonwell.tar.gz /
+ADD https://github.com/dragonwell-project/dragonwell11/releases/download/dragonwell-extended-11.0.20.17_jdk-11.0.20-ga/Alibaba_Dragonwell_Extended_11.0.20.17.8_x64_alpine-linux.tar.gz /
+RUN tar -xvf /Alibaba_Dragonwell_Extended_11.0.20.17.8_x64_alpine-linux.tar.gz
 RUN mv /dragonwell-11.0.20.17+8-GA /jre
+RUN rm -f /Alibaba_Dragonwell_Extended_11.0.20.17.8_x64_alpine-linux.tar.gz
 
 # 添加启动脚本
 ADD bootstrap.sh /bootstrap.sh
