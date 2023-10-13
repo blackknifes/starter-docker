@@ -2,10 +2,15 @@ FROM alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
-ADD nginx.conf /nginx.conf
+# 安装字体管理器以及安装常用字体
+RUN apk add --no-cache --update ttf-dejavu fontconfig && rm -rf /var/cache/apk/*
+# 安装时区数据
+RUN apk add tzdata
 
 # 安装nginx
 RUN apk add nginx
+
+ADD nginx.conf /etc/nginx/nginx.conf
 
 # 定义端口
 EXPOSE 80
@@ -29,18 +34,12 @@ ENV JVM_ARGS=
 VOLUME /java
 VOLUME /vue
 
-# 安装时区数据
-RUN apk add tzdata
-
 # 添加dragonwell jre 11环境
 ADD dragonwell.tar.gz /
 RUN mv /dragonwell-11.0.20.17+8-GA /jre
-
-# 清理本地缓存
-RUN apk cache clean --purge
 
 # 添加启动脚本
 ADD bootstrap.sh /bootstrap.sh
 
 # 启动命令
-CMD /bin/sh -c /bootstrap.sh
+ENTRYPOINT ["/bootstrap.sh"]
